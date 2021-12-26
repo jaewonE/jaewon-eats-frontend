@@ -1,11 +1,12 @@
+import { useReactiveVar } from '@apollo/client';
 import React from 'react';
+import { isLoggedInVar } from './apollo';
+import { LoggedInRouter } from './routers/logged-in-router';
+import { LoggedOutRouter } from './routers/logged-out-router';
 
 function App() {
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-800">
-      <h1 className="text-7xl text-white font-bold">Hello World!</h1>
-    </div>
-  );
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  return isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter />;
 }
 
 export default App;
