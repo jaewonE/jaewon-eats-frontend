@@ -8,8 +8,10 @@ import {
 } from '../__generated__/loginMutation';
 import { Link } from 'react-router-dom';
 import { LoginInput } from '../__generated__/globalTypes';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+
 import { isLoggedInVar } from '../apollo';
+import { LOCALSTORAGE_TOKEN } from '../constants';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -41,8 +43,8 @@ export const Login = () => {
     loginMutationVariables
   >(LOGIN_MUTATION, {
     onCompleted: ({ login: { error, sucess, token } }: loginMutation) => {
-      if (sucess) {
-        console.log(token);
+      if (sucess && token) {
+        localStorage.setItem(LOCALSTORAGE_TOKEN, token);
         isLoggedInVar(true);
       } else {
         alert(error);

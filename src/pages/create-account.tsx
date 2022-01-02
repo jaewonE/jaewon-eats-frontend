@@ -2,9 +2,8 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { FormError } from '../components/form-errors';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { isLoggedInVar } from '../apollo';
+import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { CreateUserInput, UserRole } from '../__generated__/globalTypes';
 import {
   createAccount,
@@ -28,6 +27,7 @@ interface ILoginForm {
 }
 
 export const CreateAccount = () => {
+  const navigate = useNavigate();
   <Helmet>
     <title>JaewonEats | Create Account</title>
   </Helmet>;
@@ -47,7 +47,8 @@ export const CreateAccount = () => {
   >(LOGIN_MUTATION, {
     onCompleted: ({ createUser: { error, sucess } }: createAccount) => {
       if (sucess) {
-        isLoggedInVar(true);
+        alert('Account Created! Log in now!');
+        navigate('/', { replace: true });
       } else {
         alert(error);
       }
