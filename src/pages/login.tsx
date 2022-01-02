@@ -8,6 +8,8 @@ import {
 } from '../__generated__/loginMutation';
 import { Link } from 'react-router-dom';
 import { LoginInput } from '../__generated__/globalTypes';
+import { Helmet } from 'react-helmet';
+import { isLoggedInVar } from '../apollo';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -26,32 +28,38 @@ interface ILoginForm {
 }
 
 export const Login = () => {
+  <Helmet>
+    <title>JaewonEats | Login</title>
+  </Helmet>;
   const {
     formState: { errors, isValid },
     handleSubmit,
     register,
   } = useForm<ILoginForm>({ mode: 'onChange' });
-  const [loginMutation] = useMutation<loginMutation, loginMutationVariables>(
-    LOGIN_MUTATION,
-    {
-      onCompleted: ({ login: { error, sucess, token } }: loginMutation) => {
-        if (sucess) {
-          console.log(token);
-        } else {
-          alert(error);
-        }
-      },
-    }
-  );
+  const [loginMutation, { loading }] = useMutation<
+    loginMutation,
+    loginMutationVariables
+  >(LOGIN_MUTATION, {
+    onCompleted: ({ login: { error, sucess, token } }: loginMutation) => {
+      if (sucess) {
+        console.log(token);
+        isLoggedInVar(true);
+      } else {
+        alert(error);
+      }
+    },
+  });
   const onSubmit = ({ email, password }: LoginInput) => {
-    loginMutation({
-      variables: {
-        loginInput: {
-          email,
-          password,
+    if (!loading) {
+      loginMutation({
+        variables: {
+          loginInput: {
+            email,
+            password,
+          },
         },
-      },
-    });
+      });
+    }
   };
   return (
     <div className=" bg-[#95a5a6] screen-full-center">
@@ -63,8 +71,15 @@ export const Login = () => {
         <div className=" text-4xl font-extralight mt-8">Login</div>
         <input
           required
-          className="w-2/3 h-12 border-[1px] border-gray-400 rounded-md my-3 pl-3 placeholder:font-medium outline-none focus:ring-1 focus:ring-green-500 mt-7"
-          {...register('email', { required: 'Email is required.' })}
+          className="auth-input my-2"
+          {...register('email', {
+            required: 'Email is required.',
+            pattern: {
+              value:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: 'Please enter a valid email',
+            },
+          })}
           name="email"
           type="email"
           placeholder="Email"
@@ -74,10 +89,9 @@ export const Login = () => {
         )}
         <input
           required
-          className="w-2/3 h-12 border-[1px] border-gray-400 rounded-md my-3 pl-3 placeholder:font-medium outline-none focus:ring-1 focus:ring-green-500"
+          className="auth-input my-3"
           {...register('password', {
             required: 'Password is required.',
-            minLength: 4,
           })}
           name="password"
           type="password"
@@ -86,12 +100,9 @@ export const Login = () => {
         {errors.password?.message && (
           <FormError errorMessage={errors.password?.message} />
         )}
-        {errors.password?.type === 'minLength' && (
-          <FormError errorMessage="Password must be more than 4 chars." />
-        )}
         <button
-          className={`w-2/3 h-11 bg-red-500 text-white text-xl rounded-md mt-3" ${
-            isValid ? 'mt-3' : 'bg-gray-400 pointer-events-none'
+          className={`w-2/3 h-11 bg-red-500 text-white text-xl rounded-md mt-3 " ${
+            isValid ? '' : 'bg-gray-400 pointer-events-none'
           }`}
         >
           Sign in

@@ -3,4 +3,7 @@
 .screen-full-center {
   @apply h-screen w-screen flex justify-center items-center;
 }
+.auth-input {
+  @apply w-2/3 h-12 border-[1px] border-gray-400 rounded-md pl-3 placeholder:font-medium outline-none focus:ring-1 focus:ring-green-500;
+}
 @tailwind utilities;
