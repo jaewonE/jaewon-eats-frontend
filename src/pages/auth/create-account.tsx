@@ -1,14 +1,14 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
-import { FormError } from '../components/form-errors';
+import { FormError } from '../../components/form-errors';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { CreateUserInput, UserRole } from '../__generated__/globalTypes';
+import { CreateUserInput, UserRole } from '../../__generated__/globalTypes';
 import {
   createAccount,
   createAccountVariables,
-} from '../__generated__/createAccount';
+} from '../../__generated__/createAccount';
 
 const LOGIN_MUTATION = gql`
   mutation createAccount($createAccountInput: CreateUserInput!) {
@@ -48,7 +48,7 @@ export const CreateAccount = () => {
     onCompleted: ({ createUser: { error, sucess } }: createAccount) => {
       if (sucess) {
         alert('Account Created! Log in now!');
-        navigate('/', { replace: true });
+        navigate('/login', { replace: true });
       } else {
         alert(error);
       }
@@ -144,7 +144,7 @@ export const CreateAccount = () => {
         </button>
         <div className=" text-xs mt-3">
           Already have an account?{' '}
-          <Link to="/" className=" underline text-blue-400">
+          <Link to="/login" className=" underline text-blue-400">
             Login here
           </Link>
         </div>

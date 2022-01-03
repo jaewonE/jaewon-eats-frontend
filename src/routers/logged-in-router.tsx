@@ -1,32 +1,12 @@
-import { gql, useQuery } from '@apollo/client';
 import React from 'react';
-import { getCurrentUser } from '../__generated__/getCurrentUser';
-
-const GET_CURRENT_USER = gql`
-  query getCurrentUser {
-    getCurrentUser {
-      sucess
-      error
-      user {
-        id
-        email
-        name
-        role
-      }
-    }
-  }
-`;
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useUser } from '../hooks/getCurrentUser';
+import { PageNotFound } from '../pages/pageNotFound';
+import { UserRole } from '../__generated__/globalTypes';
+import { ClientRoutes } from './client-routes';
 
 export const LoggedInRouter = () => {
-  const { data, loading, error } = useQuery<getCurrentUser>(GET_CURRENT_USER, {
-    onCompleted: ({ getCurrentUser: { sucess, error, user } }) => {
-      if (sucess && user) {
-        console.log(user);
-      } else {
-        console.log(error);
-      }
-    },
-  });
+  const { data, loading, error } = useUser();
   return (
     <div>
       {loading ? (
@@ -38,7 +18,13 @@ export const LoggedInRouter = () => {
           {!data || error ? (
             <span>{error}</span>
           ) : (
-            <span>{data?.getCurrentUser.user?.email}</span>
+            <BrowserRouter>
+              <Routes>
+                {data.getCurrentUser.user?.role === UserRole.Client &&
+                  ClientRoutes}
+                <Route element={<PageNotFound />} />
+              </Routes>
+            </BrowserRouter>
           )}
         </>
       )}

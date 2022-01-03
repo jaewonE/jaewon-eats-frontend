@@ -1,17 +1,16 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
-import { FormError } from '../components/form-errors';
+import { Helmet } from 'react-helmet';
 import {
   loginMutation,
   loginMutationVariables,
-} from '../__generated__/loginMutation';
+} from '../../__generated__/loginMutation';
+import { LOCALSTORAGE_TOKEN } from '../../constants';
+import { isLoggedInVar } from '../../apollo';
+import { LoginInput } from '../../__generated__/globalTypes';
+import { FormError } from '../../components/form-errors';
 import { Link } from 'react-router-dom';
-import { LoginInput } from '../__generated__/globalTypes';
-import { Helmet } from 'react-helmet-async';
-
-import { isLoggedInVar } from '../apollo';
-import { LOCALSTORAGE_TOKEN } from '../constants';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
