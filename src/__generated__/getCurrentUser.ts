@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { UserRole } from "./globalTypes";
+import { UserGender, UserRole } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: getCurrentUser
@@ -13,7 +13,10 @@ export interface getCurrentUser_getCurrentUser_user {
   __typename: "User";
   id: number;
   email: string;
+  emailVarifed: boolean;
   name: string;
+  age: number | null;
+  gender: UserGender | null;
   role: UserRole;
 }
 

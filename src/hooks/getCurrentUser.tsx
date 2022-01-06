@@ -9,13 +9,16 @@ const GET_CURRENT_USER = gql`
       user {
         id
         email
+        emailVarifed
         name
+        age
+        gender
         role
       }
     }
   }
 `;
 
-export const useUser = () => {
+export const UseUser = () => {
   return useQuery<getCurrentUser>(GET_CURRENT_USER);
 };

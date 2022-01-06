@@ -69,7 +69,7 @@ export const CreateAccount = () => {
     }
   };
   return (
-    <div className=" bg-[#95a5a6] screen-full-center">
+    <div className=" bg-[#95a5a6] screen-full flex-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#ecf0f1] w-full max-w-sm h-[26rem] flex flex-col justify-start items-center shadow-lg shadow-gray-600"

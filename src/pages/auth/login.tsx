@@ -7,10 +7,10 @@ import {
   loginMutationVariables,
 } from '../../__generated__/loginMutation';
 import { LOCALSTORAGE_TOKEN } from '../../constants';
-import { isLoggedInVar } from '../../apollo';
+import { authTokenVar, isLoggedInVar } from '../../apollo';
 import { LoginInput } from '../../__generated__/globalTypes';
 import { FormError } from '../../components/form-errors';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
@@ -37,6 +37,7 @@ export const Login = () => {
     handleSubmit,
     register,
   } = useForm<ILoginForm>({ mode: 'onChange' });
+  const navigate = useNavigate();
   const [loginMutation, { loading }] = useMutation<
     loginMutation,
     loginMutationVariables
@@ -44,7 +45,9 @@ export const Login = () => {
     onCompleted: ({ login: { error, sucess, token } }: loginMutation) => {
       if (sucess && token) {
         localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+        authTokenVar(token);
         isLoggedInVar(true);
+        navigate('/', { replace: true });
       } else {
         alert(error);
       }
@@ -63,7 +66,7 @@ export const Login = () => {
     }
   };
   return (
-    <div className=" bg-[#95a5a6] screen-full-center">
+    <div className=" bg-[#95a5a6] screen-full flex-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#ecf0f1] w-full max-w-sm h-96 flex flex-col justify-start items-center shadow-lg shadow-gray-600"

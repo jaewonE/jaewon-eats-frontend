@@ -33,6 +33,15 @@ export interface LoginInput {
   password: string;
 }
 
+export interface UpdateUserInput {
+  name?: string | null;
+  age?: number | null;
+  email?: string | null;
+  gender?: UserGender | null;
+  password?: string | null;
+  role?: UserRole | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

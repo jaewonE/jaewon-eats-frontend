@@ -1,33 +1,49 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useUser } from '../hooks/getCurrentUser';
-import { PageNotFound } from '../pages/pageNotFound';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { isLoggedInVar } from '../apollo';
+import { LOCALSTORAGE_TOKEN } from '../constants';
+import { UseUser } from '../hooks/getCurrentUser';
+import { LoadingForm } from '../pages/errors/loading';
+import { PageNotFound } from '../pages/errors/pageNotFound';
+import { EditProfile } from '../pages/user/edit-profile';
 import { UserRole } from '../__generated__/globalTypes';
 import { ClientRoutes } from './client-routes';
 
 export const LoggedInRouter = () => {
-  const { data, loading, error } = useUser();
+  const { data, loading, error } = UseUser();
+  if (!data || loading || error) {
+    if (!loading && error) {
+      const response: any = error.graphQLErrors[0].extensions.response;
+      if (
+        response?.statusCode === 404 &&
+        response?.message === 'User not found'
+      ) {
+        localStorage.removeItem(LOCALSTORAGE_TOKEN);
+        isLoggedInVar(false);
+        return <PageNotFound error="User Not Found" />;
+      } else {
+        return <PageNotFound error="Unexpected Error" />;
+      }
+    }
+    if (!loading && error?.message.includes('jwt')) {
+      localStorage.removeItem(LOCALSTORAGE_TOKEN);
+      isLoggedInVar(false);
+      return <PageNotFound error="Error: jwt malformed" />;
+    }
+    if (data?.getCurrentUser.error) {
+      console.error(data?.getCurrentUser.error);
+    }
+    return <LoadingForm />;
+  }
+  const user = data.getCurrentUser.user;
   return (
-    <div>
-      {loading ? (
-        <div className="screen-full-center">
-          <span className=" text-2xl font-bold tracking-wider">loading...</span>
-        </div>
-      ) : (
-        <>
-          {!data || error ? (
-            <span>{error}</span>
-          ) : (
-            <BrowserRouter>
-              <Routes>
-                {data.getCurrentUser.user?.role === UserRole.Client &&
-                  ClientRoutes}
-                <Route element={<PageNotFound />} />
-              </Routes>
-            </BrowserRouter>
-          )}
-        </>
-      )}
-    </div>
+    <Routes>
+      <Route path="/login" element={<Navigate to="/" />} />,
+      <Route path="/page-not-found" element={<PageNotFound />} />
+      <Route path="/edit-profile" element={<EditProfile user={user} />} />,
+      {user?.role === UserRole.Client && ClientRoutes}
+      <Route path="/" element={<EditProfile user={user} />} />,
+      <Route path="*" element={<Navigate to="/page-not-found" />} />
+    </Routes>
   );
 };
