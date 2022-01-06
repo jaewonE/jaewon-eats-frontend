@@ -40,7 +40,7 @@ export const EditProfile = ({
   user: getCurrentUser_getCurrentUser_user | null | undefined;
 }) => {
   const navigate = useNavigate();
-  let updatedInfo: UpdateUserInput = {};
+  const [updatedInfo, setUpdatedInfo] = useState<UpdateUserInput>({});
   const client = useApolloClient();
   if (!user) {
     navigate('/page-not-found', { replace: true });
@@ -55,6 +55,8 @@ export const EditProfile = ({
   >(UPDATE_USER, {
     onCompleted: ({ updateUser: { sucess, error } }: updateUser) => {
       if (sucess) {
+        console.log('updatedInfo');
+        console.log(updatedInfo);
         client.writeFragment({
           id: `User:${user?.id}`,
           fragment: gql`
@@ -112,7 +114,9 @@ export const EditProfile = ({
       if (!updated.name || updated.name === user?.name) delete updated.name;
       if (!updated.role || updated.role === user?.role) delete updated.role;
       if (Object.keys(updated).length) {
-        updatedInfo = updated;
+        setUpdatedInfo(updated);
+        console.log('updated');
+        console.log(updated);
         editProfile({
           variables: {
             updateUserInput: { ...updated },
