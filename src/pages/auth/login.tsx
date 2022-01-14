@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import {
   loginMutation,
   loginMutationVariables,

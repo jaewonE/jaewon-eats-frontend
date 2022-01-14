@@ -33,6 +33,11 @@ export interface LoginInput {
   password: string;
 }
 
+export interface PaginationInput {
+  page: number;
+  take: number;
+}
+
 export interface UpdateUserInput {
   name?: string | null;
   age?: number | null;

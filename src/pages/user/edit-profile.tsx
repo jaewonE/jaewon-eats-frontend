@@ -1,6 +1,6 @@
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { FormError } from '../../components/form-errors';
@@ -43,7 +43,7 @@ export const EditProfile = ({
   const [updatedInfo, setUpdatedInfo] = useState<UpdateUserInput>({});
   const client = useApolloClient();
   if (!user) {
-    navigate('/page-not-found', { replace: true });
+    navigate('/page-not-found');
   }
   <Helmet>
     <title>JaewonEats | Edit Profile</title>

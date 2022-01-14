@@ -13,6 +13,11 @@ export const LoggedInRouter = () => {
   const { data, loading, error } = UseUser();
   if (!data || loading || error) {
     if (!loading && error) {
+      if (error.message === 'Failed to fetch') {
+        console.error('Server Error');
+        localStorage.removeItem(LOCALSTORAGE_TOKEN);
+        isLoggedInVar(false);
+      }
       const response: any = error.graphQLErrors[0].extensions.response;
       if (
         response?.statusCode === 404 &&
@@ -42,8 +47,8 @@ export const LoggedInRouter = () => {
       <Route path="/page-not-found" element={<PageNotFound />} />
       <Route path="/edit-profile" element={<EditProfile user={user} />} />,
       {user?.role === UserRole.Client && ClientRoutes}
-      <Route path="/" element={<EditProfile user={user} />} />,
-      <Route path="*" element={<Navigate to="/page-not-found" />} />
+      <Route path="/" element={<Navigate to="/edit-profile" />} />,
+      {/* <Route path="*" element={<Navigate to="/page-not-found" />} /> */}
     </Routes>
   );
 };
