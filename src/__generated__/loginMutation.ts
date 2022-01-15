@@ -12,8 +12,8 @@ import { LoginInput } from "./globalTypes";
 export interface loginMutation_login {
   __typename: "LoginOutput";
   sucess: boolean;
-  token: string | null;
   error: string | null;
+  token: string | null;
 }
 
 export interface loginMutation {

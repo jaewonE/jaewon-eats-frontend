@@ -1,21 +1,16 @@
 import { gql, useQuery } from '@apollo/client';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { createSearchParams, useNavigate } from 'react-router-dom';
 import { FormCategoryIcon } from '../components/form-category-icon';
 import { FormRestaurantCard } from '../components/form-restaurant-card';
+import { SearchInput } from '../components/form-search-input';
 import { Header } from '../components/header';
 import { PageToggle } from '../components/pageToggle';
+import { CATEGORY_FRAGMENT } from '../fragments/category.fragment';
+import { RESTAURANT_FRAGMENT } from '../fragments/restaurant.fragment';
 import {
   restaurantsPageQuery,
   restaurantsPageQueryVariables,
 } from '../__generated__/restaurantsPageQuery';
-
-interface ISearchForm {
-  input: string;
-}
 
 const RESTAURANTS_QUERY = gql`
   query restaurantsPageQuery($input: PaginationInput!) {
@@ -23,10 +18,7 @@ const RESTAURANTS_QUERY = gql`
       sucess
       error
       categories {
-        id
-        name
-        coverImg
-        slug
+        ...CategoryFragment
       }
     }
     findAllRestaurant(input: $input) {
@@ -35,25 +27,15 @@ const RESTAURANTS_QUERY = gql`
       totalPages
       totalResult
       restaurants {
-        id
-        name
-        coverImg
-        category {
-          name
-        }
-        address
-        isPromoted
+        ...RestaurantFragment
       }
     }
   }
+  ${CATEGORY_FRAGMENT}
+  ${RESTAURANT_FRAGMENT}
 `;
 
 export const Restaurants = () => {
-  const { handleSubmit, register, watch } = useForm<ISearchForm>({
-    mode: 'onSubmit',
-  });
-  const navigate = useNavigate();
-  const searchInput = watch('input', '');
   const [pageNum, setPageNum] = useState<number>(1);
   const { data, loading } = useQuery<
     restaurantsPageQuery,
@@ -61,39 +43,10 @@ export const Restaurants = () => {
   >(RESTAURANTS_QUERY, {
     variables: { input: { page: pageNum, take: 4 } },
   });
-  const onSubmit = ({ input }: ISearchForm) => {
-    navigate({
-      pathname: '/search',
-      search: `?${createSearchParams({ search: input })}`,
-    });
-  };
   return (
     <div className="screen-full min-w-[460px]">
       <Header />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="group flex-center h-1/6 sm:h-1/5 md:h-1/4 bg-gray-500 relative"
-      >
-        <input
-          required
-          className="auth-input h-14 text-xl pl-7 group-focus:ring-2"
-          {...register('input', { required: 'Enter restaurants...' })}
-          name="input"
-          type="text"
-          placeholder="Search restaurants..."
-        />
-        <button type="submit">
-          <FontAwesomeIcon
-            icon={faSearch}
-            className={`sm:text-2xl text-xl absolute top-[46%] sm:right-[19%] right-[20%]
-             opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out ${
-               searchInput
-                 ? 'sm:opacity-100'
-                 : 'sm:opacity-0 pointer-events-none'
-             }`}
-          />
-        </button>
-      </form>
+      <SearchInput />
       {!loading && (
         <div className="flex justify-around items-center h-auto min-h-min flex-wrap mt-3 md:mt-5 bg-gray-100 max-w-full">
           {data?.getAllCategory.categories?.map((category) => (

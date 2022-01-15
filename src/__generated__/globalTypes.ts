@@ -38,6 +38,12 @@ export interface PaginationInput {
   take: number;
 }
 
+export interface SearchRestaurantByNameInput {
+  page: number;
+  take: number;
+  restaurantName: string;
+}
+
 export interface UpdateUserInput {
   name?: string | null;
   age?: number | null;
