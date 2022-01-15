@@ -5,7 +5,7 @@ import { FormRestaurantCard } from '../components/form-restaurant-card';
 import { SearchInput } from '../components/form-search-input';
 import { Header } from '../components/header';
 import { PageToggle } from '../components/pageToggle';
-import { RestaurantNotFound } from '../components/restaurant-not-found';
+import { PropertyNotFound } from '../components/restaurant-not-found';
 import { RESTAURANT_FRAGMENT } from '../fragments/restaurant.fragment';
 import {
   searchRestaurant,
@@ -56,7 +56,13 @@ export const SearchRestaurant = () => {
   return (
     <div className="screen-full flex flex-col">
       <Header />
-      <SearchInput defaultValues={searchValue.current} />
+      <SearchInput
+        defaultValues={
+          searchValue.current
+            ? searchValue.current
+            : location.search.split('?search=')[1]
+        }
+      />
       {called && !loading && (
         <>
           {data?.searchRestaurant.totalResult ? (
@@ -80,7 +86,10 @@ export const SearchRestaurant = () => {
               )}
             </div>
           ) : (
-            <RestaurantNotFound searchValue={searchValue.current} />
+            <PropertyNotFound
+              mainMessage={`There is no restaurant name that contains an ${searchValue.current}`}
+              subMessage="Enter a different search term to find a restaurant!"
+            />
           )}
         </>
       )}

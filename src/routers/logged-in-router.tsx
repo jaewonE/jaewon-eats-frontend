@@ -48,7 +48,7 @@ export const LoggedInRouter = () => {
       <Route path="/edit-profile" element={<EditProfile user={user} />} />,
       {user?.role === UserRole.Client && ClientRoutes}
       <Route path="/" element={<Navigate to="/edit-profile" />} />,
-      {/* <Route path="*" element={<Navigate to="/page-not-found" />} /> */}
+      <Route path="*" element={<Navigate to="/page-not-found" />} />
     </Routes>
   );
 };

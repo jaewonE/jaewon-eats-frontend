@@ -1,23 +1,25 @@
 import React from 'react';
 
-interface IRestaurantNotFound {
-  searchValue?: string;
+interface IPropertyNotFound {
+  mainMessage: string;
+  subMessage?: string;
 }
 
-export const RestaurantNotFound: React.FC<IRestaurantNotFound> = ({
-  searchValue,
+export const PropertyNotFound: React.FC<IPropertyNotFound> = ({
+  mainMessage,
+  subMessage,
 }) => (
   <div className="w-full h-full flex-center justify-start pt-10">
     <div className=" text-[13rem] font-bold text-transparent bg-clip-text bg-gradient-to-br from-red-500 via-purple-500 to-blue-600">
       0
     </div>
-    {searchValue && (
-      <div className="text-2xl font-semibold text-center relative bottom-7">
-        There is no restaurant name that contains an {searchValue}
+    <div className="text-2xl font-semibold text-center px-3 relative bottom-7">
+      {mainMessage}
+    </div>
+    {subMessage && (
+      <div className="text-xl text-center py-7 px-3 relative bottom-7">
+        {subMessage}
       </div>
     )}
-    <div className="text-xl text-center py-7 relative bottom-7">
-      Enter a different search term to find a restaurant!
-    </div>
   </div>
 );

@@ -19,6 +19,11 @@ export enum UserRole {
   Owner = "Owner",
 }
 
+export interface CategorySelector {
+  slug?: string | null;
+  id?: number | null;
+}
+
 export interface CreateUserInput {
   name: string;
   age?: number | null;
@@ -26,6 +31,12 @@ export interface CreateUserInput {
   gender?: UserGender | null;
   password: string;
   role: UserRole;
+}
+
+export interface GetCategoryInput {
+  page: number;
+  take: number;
+  selector: CategorySelector;
 }
 
 export interface LoginInput {
