@@ -72,7 +72,7 @@ export const Login = () => {
         className="bg-[#ecf0f1] w-full max-w-sm h-96 flex flex-col justify-start items-center shadow-lg shadow-gray-600"
       >
         <div className="bg-gradient-to-r from-green-600 via-purple-500 to-yellow-500 h-2 w-full"></div>
-        <div className=" text-4xl font-extralight mt-8">Login</div>
+        <div className=" text-4xl font-extralight mt-8 mb-5">Login</div>
         <input
           required
           className="auth-input my-2"

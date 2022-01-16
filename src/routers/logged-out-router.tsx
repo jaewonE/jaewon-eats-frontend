@@ -6,6 +6,7 @@ import { Login } from '../pages/auth/login';
 import { Category } from '../pages/category';
 import { PageNotFound } from '../pages/errors/pageNotFound';
 import { Restaurants } from '../pages/restaurant';
+import { RestaurantDetail } from '../pages/restaurant-detail';
 import { SearchRestaurant } from '../pages/search-restaurant';
 
 export const LoggedOutRouter = () => {
@@ -14,6 +15,7 @@ export const LoggedOutRouter = () => {
       <Route path="/create-account" element={<CreateAccount />} />
       <Route path="/login" element={<Login />} />
       <Route path="/page-not-found" element={<PageNotFound />} />
+      <Route path="/restaurant/:id" element={<RestaurantDetail />} />
       <Route path="/restaurant" element={<Restaurants />} />
       <Route path="/search" element={<SearchRestaurant />} />
       <Route path="/category" element={<Category />} />

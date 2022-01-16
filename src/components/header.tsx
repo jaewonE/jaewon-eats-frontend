@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Raect from 'react';
@@ -7,6 +8,7 @@ import { LOCALSTORAGE_TOKEN } from '../constants';
 import { Logo } from './logo';
 
 export const Header = () => {
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   const handleLogOut = () => {
     localStorage.removeItem(LOCALSTORAGE_TOKEN);
     isLoggedInVar(false);
@@ -17,15 +19,17 @@ export const Header = () => {
       <Logo />
       <div className="flex justify-end items-center w-full">
         <div className="text-xs ml-2 lg:ml-3 sm:ml-1 w-9 text-center">
-          <Link to="/edit-profile">
+          <Link to={isLoggedIn ? '/edit-profile' : '/login'}>
             <FontAwesomeIcon icon={faUser} className="text-2xl" />
           </Link>
         </div>
-        <div className="text-xs ml-2 lg:ml-3 w-9 text-center">
-          <Link to="/login" onClick={handleLogOut}>
-            <FontAwesomeIcon icon={faSignOutAlt} className="text-2xl" />
-          </Link>
-        </div>
+        {isLoggedIn && (
+          <div className="text-xs ml-2 lg:ml-3 w-9 text-center">
+            <Link to="/login" onClick={handleLogOut}>
+              <FontAwesomeIcon icon={faSignOutAlt} className="text-2xl" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

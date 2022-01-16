@@ -26,6 +26,7 @@ export interface restaurantsPageQuery_getAllCategory {
 
 export interface restaurantsPageQuery_findAllRestaurant_restaurants_category {
   __typename: "Category";
+  slug: string;
   name: string;
 }
 

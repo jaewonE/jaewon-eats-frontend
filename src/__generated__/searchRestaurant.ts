@@ -11,6 +11,7 @@ import { SearchRestaurantByNameInput } from "./globalTypes";
 
 export interface searchRestaurant_searchRestaurant_restaurants_category {
   __typename: "Category";
+  slug: string;
   name: string;
 }
 

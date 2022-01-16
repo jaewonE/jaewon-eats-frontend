@@ -9,6 +9,7 @@
 
 export interface RestaurantFragment_category {
   __typename: "Category";
+  slug: string;
   name: string;
 }
 

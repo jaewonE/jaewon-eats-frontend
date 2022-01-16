@@ -33,6 +33,10 @@ export interface CreateUserInput {
   role: UserRole;
 }
 
+export interface FindRestaurantByIdInput {
+  restaurantId: number;
+}
+
 export interface GetCategoryInput {
   page: number;
   take: number;
