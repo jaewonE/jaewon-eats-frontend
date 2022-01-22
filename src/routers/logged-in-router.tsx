@@ -8,6 +8,7 @@ import { PageNotFound } from '../pages/errors/pageNotFound';
 import { EditProfile } from '../pages/user/edit-profile';
 import { UserRole } from '../__generated__/globalTypes';
 import { ClientRoutes } from './client-routes';
+import { OwnerRoutes } from './owner-routes';
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = UseUser();
@@ -44,11 +45,16 @@ export const LoggedInRouter = () => {
   return (
     <Routes>
       <Route path="/login" element={<Navigate to="/" />} />,
-      <Route path="/page-not-found" element={<PageNotFound />} />
       <Route path="/edit-profile" element={<EditProfile user={user} />} />,
-      {user?.role === UserRole.Client && ClientRoutes}
-      <Route path="/" element={<Navigate to="/edit-profile" />} />,
-      <Route path="*" element={<Navigate to="/page-not-found" />} />
+      {user?.role === UserRole.Owner &&
+        OwnerRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      {user?.role === UserRole.Client &&
+        ClientRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

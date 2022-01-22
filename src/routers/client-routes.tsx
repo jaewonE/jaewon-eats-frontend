@@ -1,13 +1,17 @@
-import { Navigate, Route } from 'react-router-dom';
-import { Category } from '../pages/category';
-import { Restaurants } from '../pages/restaurant';
-import { RestaurantDetail } from '../pages/restaurant-detail';
-import { SearchRestaurant } from '../pages/search-restaurant';
+import { Navigate } from 'react-router-dom';
+import { CreateAccount } from '../pages/auth/create-account';
+import { Category } from '../pages/client/category';
+import { Restaurants } from '../pages/client/restaurant';
+import { RestaurantDetail } from '../pages/client/restaurant-detail';
+import { SearchRestaurant } from '../pages/client/search-restaurant';
+import { PageNotFound } from '../pages/errors/pageNotFound';
 
 export const ClientRoutes = [
-  <Route key={0} path="/" element={<Navigate to="/restaurant" />} />,
-  <Route key={1} path="/restaurant/:id" element={<RestaurantDetail />} />,
-  <Route key={2} path="/restaurant" element={<Restaurants />} />,
-  <Route key={3} path="/search" element={<SearchRestaurant />} />,
-  <Route key={4} path="/category" element={<Category />} />,
+  { path: '/create-account', element: <CreateAccount /> },
+  { path: '/page-not-found', element: <PageNotFound /> },
+  { path: '/restaurant/:id', element: <RestaurantDetail /> },
+  { path: '/restaurant', element: <Restaurants /> },
+  { path: '/search', element: <SearchRestaurant /> },
+  { path: '/category', element: <Category /> },
+  { path: '/', element: <Navigate to="/restaurant" /> },
 ];

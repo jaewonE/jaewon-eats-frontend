@@ -1,6 +1,6 @@
 {
   "name": "jaewon-eats-frontend",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.6",
@@ -31,6 +31,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "before:codegen": "nvm use v14.18.1",
     "apollo:codegen": "apollo client:codegen src/__generated__ --target=typescript --outputFlat",
@@ -52,6 +53,14 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "./src/app.spec.tsx",
+      "./src/components/**/*.tsx",
+      "./src/pages/**/*.tsx",
+      "./src/routers/**/*.tsx"
     ]
   },
   "devDependencies": {

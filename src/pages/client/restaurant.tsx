@@ -1,16 +1,16 @@
 import { gql, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { FormCategoryIcon } from '../components/form-category-icon';
-import { FormRestaurantCard } from '../components/form-restaurant-card';
-import { SearchInput } from '../components/form-search-input';
-import { Header } from '../components/header';
-import { PageToggle } from '../components/pageToggle';
-import { CATEGORY_FRAGMENT } from '../fragments/category.fragment';
-import { RESTAURANT_FRAGMENT } from '../fragments/restaurant.fragment';
+import { FormCategoryIcon } from '../../components/form-category-icon';
+import { FormRestaurantCard } from '../../components/form-restaurant-card';
+import { SearchInput } from '../../components/form-search-input';
+import { Header } from '../../components/header';
+import { PageToggle } from '../../components/pageToggle';
+import { CATEGORY_FRAGMENT } from '../../fragments/category.fragment';
+import { RESTAURANT_FRAGMENT } from '../../fragments/restaurant.fragment';
 import {
   restaurantsPageQuery,
   restaurantsPageQueryVariables,
-} from '../__generated__/restaurantsPageQuery';
+} from '../../__generated__/restaurantsPageQuery';
 
 const RESTAURANTS_QUERY = gql`
   query restaurantsPageQuery($input: PaginationInput!) {

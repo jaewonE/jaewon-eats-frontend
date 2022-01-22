@@ -1,13 +1,13 @@
 import { gql, useLazyQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
-import { Header } from '../components/header';
-import { DISH_FRAGMENT } from '../fragments/dish.fragment';
-import { RESTAURANT_FRAGMENT } from '../fragments/restaurant.fragment';
+import { Header } from '../../components/header';
+import { DISH_FRAGMENT } from '../../fragments/dish.fragment';
+import { RESTAURANT_FRAGMENT } from '../../fragments/restaurant.fragment';
 import {
   findRestaurant,
   findRestaurantVariables,
-} from '../__generated__/findRestaurant';
+} from '../../__generated__/findRestaurant';
 
 const GET_RESTAURANT = gql`
   query findRestaurant($input: FindRestaurantByIdInput!) {
@@ -65,7 +65,7 @@ export const RestaurantDetail = () => {
           <img
             className="w-full h-full object-cover overflow-hidden"
             alt={data.findRestaurant.restaurant.coverImg}
-            src={require(`../images/coverImg/restaurants/${data.findRestaurant.restaurant.coverImg}`)}
+            src={require(`../../images/coverImg/restaurants/${data.findRestaurant.restaurant.coverImg}`)}
           />
           <div
             className="absolute top-[30%] left-0 w-1/3 max-w-sm min-w-[18rem] h-40 md:max-w-md lg:h-48 bg-white 

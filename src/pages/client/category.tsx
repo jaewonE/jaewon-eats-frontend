@@ -1,16 +1,16 @@
 import { gql, useLazyQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormCategoryIcon } from '../components/form-category-icon';
-import { FormRestaurantCard } from '../components/form-restaurant-card';
-import { Header } from '../components/header';
-import { PageToggle } from '../components/pageToggle';
-import { PropertyNotFound } from '../components/restaurant-not-found';
-import { CATEGORY_FRAGMENT } from '../fragments/category.fragment';
+import { FormCategoryIcon } from '../../components/form-category-icon';
+import { FormRestaurantCard } from '../../components/form-restaurant-card';
+import { Header } from '../../components/header';
+import { PageToggle } from '../../components/pageToggle';
+import { PropertyNotFound } from '../../components/restaurant-not-found';
+import { CATEGORY_FRAGMENT } from '../../fragments/category.fragment';
 import {
   getCategory,
   getCategoryVariables,
-} from '../__generated__/getCategory';
+} from '../../__generated__/getCategory';
 
 const GET_CATEGORY = gql`
   query getCategory($input: GetCategoryInput!) {

@@ -24,6 +24,13 @@ export interface CategorySelector {
   id?: number | null;
 }
 
+export interface CreateRestaurantInput {
+  name: string;
+  coverImg: string;
+  address: string;
+  categoryName: string;
+}
+
 export interface CreateUserInput {
   name: string;
   age?: number | null;

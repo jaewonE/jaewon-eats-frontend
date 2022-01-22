@@ -1,16 +1,16 @@
 import { gql, useLazyQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FormRestaurantCard } from '../components/form-restaurant-card';
-import { SearchInput } from '../components/form-search-input';
-import { Header } from '../components/header';
-import { PageToggle } from '../components/pageToggle';
-import { PropertyNotFound } from '../components/restaurant-not-found';
-import { RESTAURANT_FRAGMENT } from '../fragments/restaurant.fragment';
+import { FormRestaurantCard } from '../../components/form-restaurant-card';
+import { SearchInput } from '../../components/form-search-input';
+import { Header } from '../../components/header';
+import { PageToggle } from '../../components/pageToggle';
+import { PropertyNotFound } from '../../components/restaurant-not-found';
+import { RESTAURANT_FRAGMENT } from '../../fragments/restaurant.fragment';
 import {
   searchRestaurant,
   searchRestaurantVariables,
-} from '../__generated__/searchRestaurant';
+} from '../../__generated__/searchRestaurant';
 
 const SEARCH_RESTAURANT = gql`
   query searchRestaurant($input: SearchRestaurantByNameInput!) {
@@ -24,7 +24,6 @@ const SEARCH_RESTAURANT = gql`
       }
     }
   }
-
   ${RESTAURANT_FRAGMENT}
 `;
 
