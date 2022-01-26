@@ -25,5 +25,19 @@ export const MyRestaurants = () => {
       console.log(data.myRestaurants.error);
     }
   }
-  return <div>MyRestaurant</div>;
+  return (
+    <div>
+      {data?.myRestaurants.sucess && !loading ? (
+        <>
+          {data?.myRestaurants.restaurants.length ? (
+            <div>myRestaurants</div>
+          ) : (
+            <div>No Restaurants</div>
+          )}
+        </>
+      ) : (
+        <div>loading...</div>
+      )}
+    </div>
+  );
 };

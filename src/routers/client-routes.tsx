@@ -7,11 +7,11 @@ import { SearchRestaurant } from '../pages/client/search-restaurant';
 import { PageNotFound } from '../pages/errors/pageNotFound';
 
 export const ClientRoutes = [
-  { path: '/create-account', element: <CreateAccount /> },
-  { path: '/page-not-found', element: <PageNotFound /> },
-  { path: '/restaurant/:id', element: <RestaurantDetail /> },
-  { path: '/restaurant', element: <Restaurants /> },
-  { path: '/search', element: <SearchRestaurant /> },
-  { path: '/category', element: <Category /> },
-  { path: '/', element: <Navigate to="/restaurant" /> },
+  { path: '/create-account', element: () => <CreateAccount /> },
+  { path: '/page-not-found', element: () => <PageNotFound /> },
+  { path: '/restaurant/:id', element: () => <RestaurantDetail /> },
+  { path: '/restaurant', element: () => <Restaurants /> },
+  { path: '/search', element: () => <SearchRestaurant /> },
+  { path: '/category', element: () => <Category /> },
+  { path: '/', element: () => <Navigate to="/restaurant" /> },
 ];

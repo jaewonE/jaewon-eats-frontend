@@ -8,7 +8,7 @@ export const LoggedOutRouter = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       {ClientRoutes.map((route) => (
-        <Route key={route.path} path={route.path} element={route.element} />
+        <Route key={route.path} path={route.path} element={route.element()} />
       ))}
       <Route path="*" element={<Navigate to="/restaurant" />} />
     </Routes>

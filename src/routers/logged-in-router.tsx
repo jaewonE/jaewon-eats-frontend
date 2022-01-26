@@ -48,11 +48,11 @@ export const LoggedInRouter = () => {
       <Route path="/edit-profile" element={<EditProfile user={user} />} />,
       {user?.role === UserRole.Owner &&
         OwnerRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
+          <Route key={route.path} path={route.path} element={route.element()} />
         ))}
       {user?.role === UserRole.Client &&
         ClientRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
+          <Route key={route.path} path={route.path} element={route.element()} />
         ))}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
