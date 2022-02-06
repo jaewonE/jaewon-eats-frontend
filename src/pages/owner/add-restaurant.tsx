@@ -2,11 +2,11 @@ import { gql, useMutation, useReactiveVar } from '@apollo/client';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { authTokenVar } from '../../apollo';
 import { FormError } from '../../components/form-errors';
 import { Header } from '../../components/header';
 import { InputFileForm } from '../../components/input-file-form';
-import { IRouterProps } from '../../routers/owner-routes';
 import {
   add_restaurant,
   add_restaurantVariables,
@@ -34,17 +34,19 @@ export const AddRestaurant = () => {
     <title>JaewonEats | Restaurants overview</title>
   </Helmet>;
   const authToken = useReactiveVar(authTokenVar);
+  const navigate = useNavigate();
   const [processing, setProcessing] = useState(false);
-  const [addRestaurantMutation, { data }] = useMutation<
+  const [addRestaurantMutation] = useMutation<
     add_restaurant,
     add_restaurantVariables
   >(ADD_RESTAURANT, {
-    onCompleted: () => {
+    onCompleted: ({ createRestaurant: { sucess, error } }) => {
       setProcessing(false);
-      if (data?.createRestaurant.sucess) {
-        console.log(data?.createRestaurant.sucess);
+      if (sucess) {
+        alert('Sucessfully add restaurant!\nRedirect to main page');
+        navigate({ pathname: '/', hash: 'refetch=true' });
       } else {
-        console.log(data?.createRestaurant.error);
+        alert(error);
       }
     },
     onError: (error) => {
@@ -67,23 +69,36 @@ export const AddRestaurant = () => {
       const actualFile = coverImg[0];
       const formBody = new FormData();
       formBody.append('file', actualFile);
-      const data = await (
-        await fetch('http://localhost:4000/upload', {
-          method: 'POST',
-          body: formBody,
-          headers: new Headers({
-            'x-jwt': authToken ? authToken : '',
-            'restaurant-name': encodeURI(formValue.name),
-          }),
-        })
-      ).json();
-      console.log(data);
-      // addRestaurantMutation({
-      //   variables: { input: { ...formValue, coverImg: file } },
-      // });
+      let result;
+      try {
+        result = await (
+          await fetch('http://localhost:4000/upload', {
+            method: 'POST',
+            body: formBody,
+            headers: new Headers({
+              'x-jwt': authToken ? authToken : '',
+              'restaurant-name': encodeURI(formValue.name),
+            }),
+          })
+        ).json();
+      } catch (error) {
+        throw new Error(
+          typeof error === 'string' ? error : 'Interval Server Error'
+        );
+      }
+      if (result?.status === 200 && result?.data?.file) {
+        addRestaurantMutation({
+          variables: { input: { ...formValue, coverImg: result.data.file } },
+        });
+      } else {
+        alert('Restaurant name has already exist');
+        setProcessing(false);
+      }
+    } catch (error) {
       setProcessing(false);
-    } catch (e) {
-      console.error(e);
+      throw new Error(
+        typeof error === 'string' ? error : 'Interval Server Error'
+      );
     }
   };
   const switchHeight = (length: number) => {

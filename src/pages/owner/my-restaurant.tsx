@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
+import { Header } from '../../components/header';
 import { RESTAURANT_FRAGMENT } from '../../fragments/restaurant.fragment';
 import { getMyRestaurants } from '../../__generated__/getMyRestaurants';
 
@@ -27,6 +28,7 @@ export const MyRestaurants = () => {
   }
   return (
     <div>
+      <Header />
       {data?.myRestaurants.sucess && !loading ? (
         <>
           {data?.myRestaurants.restaurants.length ? (
