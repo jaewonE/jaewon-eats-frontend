@@ -44,7 +44,7 @@ export const AddRestaurant = () => {
       setProcessing(false);
       if (sucess) {
         alert('Sucessfully add restaurant!\nRedirect to main page');
-        navigate({ pathname: '/', hash: 'refetch=true' });
+        navigate({ pathname: '/' });
       } else {
         alert(error);
       }
