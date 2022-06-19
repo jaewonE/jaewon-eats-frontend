@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/jaewon-eats-frontend/static/css/main.986625af.css",
+    "main.js": "/jaewon-eats-frontend/static/js/main.13b760ed.js",
+    "static/js/787.6536e047.chunk.js": "/jaewon-eats-frontend/static/js/787.6536e047.chunk.js",
+    "index.html": "/jaewon-eats-frontend/index.html",
+    "main.986625af.css.map": "/jaewon-eats-frontend/static/css/main.986625af.css.map",
+    "main.13b760ed.js.map": "/jaewon-eats-frontend/static/js/main.13b760ed.js.map",
+    "787.6536e047.chunk.js.map": "/jaewon-eats-frontend/static/js/787.6536e047.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.986625af.css",
+    "static/js/main.13b760ed.js"
+  ]
+}
